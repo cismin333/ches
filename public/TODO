@@ -1,0 +1,576 @@
+PROJECT: 6 Man Chess / Nigerian Tic Tac Toe
+DATE: 5/20/14 - 7/28/14 - ?
+
+--------------------------------------------------
+TODO:
+--------------------------------------------------
+
+- Clarity
+	- not clear when game starts -/
+	- not clear which side the player is (red/yellow) -/
+	- not clear how to play game in different phases -/
+		- make player colored announcements? -/
+		- change board and smiley responses
+	- new how to play the game guide, simpler, clearer, shorter and juicier -/
+	    - access how to play game from front screen -/
+	    - add next back nav buttons to button of help section
+
+- UI/Player interface
+	- add button to hide scoreboard -/
+	- add button to nudge afk player -/
+	- add quit button -/
+	- add option button -/
+	- add info button -/
+    - add MOVE state highlight boxes -/
+    - add restart button
+    - add player announcement -/
+    - add player labels -/
+
+- move to online node(heroku) app
+	- install node etc. -/
+	- set web and client side code -/
+	- push to heroku
+
+- make the game juicy
+	- new graphics
+		- tiles -/
+		- turn pieces into similies :( & :) -/
+			- set state pieces -/
+			- move state pieces -/
+			- scoreboard icons -/
+			- end game pieces -/
+		- board -/
+			- checkers board for move phase of game -/
+		- animations/tweens
+			- tiles being drawn -/
+			- board being drawn or tile pieces moving in to form board
+			- ui tweens
+			    -hide/show -/
+			    -game start
+		- update scoreboard image -/
+	- more responsive
+		- selecting tile -/
+		- changing game mode -/
+		- moving pieces(smile when together, frawn when apart)
+		- drag and drop to move pieces -/
+			- implement snapping -/
+			- implement bounding board(sprite) -/
+			- implement drag event handlers -/
+			- implement simple physics collisions -/
+		- active responses -/
+			- open tiles wink at player X
+			- enemy tiles angry on hover -/
+			- tiles do something when player's turn -/
+				- player's tiles fall asleep not turn -/
+				- player's tiles awaken on turn -/
+		- change mouse style
+			- move when MOVE STATE
+			- pointer when SET STATE
+			- not-allowed when over enemy tiles
+	- audio
+		- pieces moving, setting down
+		- win(golf clap, kids cheering) -/
+		- loss(oh no, booo) -/
+
+- optimization
+    - changePlayer function should compare ids of players not objects
+    - remove all conditionals that compare entire objects
+    - reduce number of loaded images
+    - reduce number of loaded sounds
+    - use sprite sheets
+    - use local/remote player instead of Board.players[]
+
+- clean up
+	- separate main.js into modules/component files -/
+	- remove commented, unused and shit code -/
+	- remove superflous functions vars, etc..
+	- refine functions to only do one thing
+	- use git for version control if necessary
+
+- Future features
+    - MOVE state, move with mouse click as well as drag
+    - Lighting games, time runs out random move is made
+    - Timer and or turn counter
+    - Score based game mode or add a scoring system
+    - Fireworks and rain/thunder storm
+    - Background audio
+    - Moving/Setting pieces audio
+    - African theme
+
+- create script to open all windows/apps for development
+	- open chromium, firefox to certain page -/
+	- open sublime 2 project NAME -/
+	- open terminal at project folder and start sever
+
+--------------------------------------------------
+BUGS/ISSUES:
+--------------------------------------------------
+
+- board reset causes an error on line 112 -/
+  this.prev_position.setTo( 0 );
+  Uncaught TypeError: undefined is not a function
+
+- UI panel disappears after show btn is pressed -/
+
+- quit not enabled after game win/loss and board reset -/
+
+- don't force restart after game over/declareWinner is called
+
+- sleep/wake, smile/frawn and other bifacial expressions are broken
+    - first piece set down does not wake up on player start turn, sleep is broken
+
+- fails to update turn(current_player) after game ends -/
+(declare winner called), both players have null current_player
+Board.isLocalPlayerTurn() returns false for both players
+
+- web.js "exited with code 8" when host of an existing game
+in empty_games//full_games leaves
+
+- disconnect and reconnect to the same game does
+not update first player to second player position
+but it does update second player to first player
+position
+
+02:16:31 web.1  | info: transport end (undefined)
+02:16:31 web.1  | 15 Jul 02:16:31 - Player has disconnected: DW0IKUDqyTDhksoSQnU6
+02:16:31 web.1  | 15 Jul 02:16:31 - deleted game from empty_games: DW0IKUDqyTDhksoSQnU6
+02:16:31 web.1  | Error: ENOENT, open 'C:\Users\Work\Documents\AAA My Office\Martini\6ManChess\6ManChess_Heroku\public\js\main.js'
+02:16:31 web.1  | exited with code 8
+02:16:31 system | sending SIGKILL to all processes
+
+--------------------------------------------------
+DONE:
+--------------------------------------------------
+
+- FINISH menu system(NOT NEEDED)
+    - button on click -/
+    - button sprite sheet -/
+    - multi use functionality
+
+- onclick events -/
+- board object -/
+- player object -/
+- 3 pieces/states for tiles -/
+- create movement rules and logic -/
+- add win conditions -/
+- add scoreboard -/
+- create board.reset() and player.reset() -/
+- send message to specific client -/
+- add properties to this/client object, like game_id -/
+
+- quit() destroy causes error -/
+
+- can drag or click pieces in set phase -/
+
+- player has to double click to move when player turn starts -/
+
+- clicking on boarder of tile 6 lands player in tile 9 -/
+
+- Phaser library bug in add.tween().from -/
+line 38219 of phaser js, missing return
+this.to(_cache, duration, ease, autoStart, delay, repeat, yoyo);
+should be
+return this.to(_cache, duration, ease, autoStart, delay, repeat, yoyo);
+
+- declare winner does nto work in SET mode because piece is being
+tween in it is called, wrong position; -/
+    -> use a new position variable hard_position which set to destination
+    position during board click, before tween
+
+- onNudge does not work, web.js does not receive the message -/
+    -> forgot to restart sever lols
+
+- place enemy piece over each friendly piece, at tile4 -/
+    -> the move checking function used Board.tiles instead of Player.pieces
+
+- client.js when game is ended, a player disconnects and new
+player joins, neither player turn is set to true, if player
+with the turn leaves -/
+
+- error caused on 132 web.js when game.length > 0
+but no open games, if no open games create a game
+or remove full games from games list, use 2 lists -/
+
+- make sure all x or y of pieces on the same row
+or col are the same, sense being off by 1pixel
+can mean that findSlope returns the wrong slope
+and iswinner() breaks -/
+
+- web.js problem with getGameIndex not returning the index
+of a an existing game in full_games -/
+
+- checkRules(), constraints on movement, 
+move only too adjacent tiles, is not working 
+Player 2 MOVE phase move (1->7) was allowed -/
+
+- bug scoreboard does not update both players, just
+winner and losers score is set to zero -/
+
+- when piece is being moved played should be able
+to click back on the tile to deselect it, instead
+of clicking on another piece -/
+
+- end game change player's turn squence doesn't work,
+not communicating with server -/
+
+- null check before using game.player.client to 
+communicate to player -/
+
+- changes states after winner is declared, player 2
+wins in SET state still changes to MOVE state -/
+
+- animation sprite fails to be destroyed if game
+is interupted(game.pause = true) and is than resumed
+animation will continue to be played even if new one
+needs to take its place -/
+
+- selected tile bug, selected tile turns white and
+player is able to select enemy tiles -/
+
+--------------------------------------------------
+NOTES:
+--------------------------------------------------
+
+//you can use * as a wildcard in css, to pass a style to all child elements
+.ui-overview * {
+    display: inline;
+}
+
+//foreman star works just like foreman start...
+
+//css sprites are cool but remember moving right is negative x, moving down is
+//negative y http://css-tricks.com/css-sprites/
+
+//use setStyle to change style of phaser text, setting the style properties
+//in text object or its style object only changes the values, it does not
+//update the text
+UI.player_label.setStyle( { fill: "#ff0000" } )
+
+//this prints out something strange in google chrome console
+console.log( tile.neighbors_d[m], "," );
+prints out: 12 ","
+the comma has quotes for some reason, it is because the previous
+parameter is not a string or a character
+console.log( 'a', ',' ) -prints-> a ,
+console.log( false, ',' ) -prints-> false ","
+
+// Adding LabelButton to phaser group enables the input for some reason
+So call input.enable = false, after you add the button to the group,
+not before
+
+// you can push multiple items into an array using on push call
+var array = []
+undefined
+array.push( 1, 2, 3 )
+3
+array
+[1, 2, 3]
+
+//ALT+J to select next occurrence of a key word
+//http://blog.jetbrains.com/webstorm/2014/02/
+webstorm-8-eap-build-134-1361-multiple-selection/
+
+//this in server socket.io in all handlers
+//is equal to client, hence this.id == client.id
+
+//How to send message to specif client with socket.io
+http://stackoverflow.com/questions/17476294
+...basicaly save that objects this from a connection
+event handler and use that to send messages to it via
+the emit method
+
+game.player1.client.emit( msg_name, msg )
+
+//Drag and Drop event stuff
+//snap drag example
+http://examples.phaser.io/_site/view_full.html?d=input&f=snap+on+drag.js&t=snap%20on%20drag
+//info on enableDrag function
+http://docs.phaser.io/Phaser.InputHandler.html#enableDrag
+
+//invisible sprites, visible = false, can
+//still be collided with, physics collisions
+//affect them and they show up in handler
+
+/*updating heroku git repo*/
+commit all files and changes with: git commit -a
+To commit changes when cmd turns into Vim/Git bash
+press INSERT
+- add comments
+press ESC
+- to access comand line at bottom of vim
+press :
+- to enter command into the command line
+press w
+- write the commit comments
+press q
+- to quit the vim and commit, u can't do this without writing
+
+/*deploying to heroku*/
+- cmd: heroku login
+- user: mtandemskel@gmail.com, pass: 4FreeHosting!
+- commit all changes first, if u created new files, use "git add . " to
+allow git to track those files so they can be commited
+- run "git push heroku master" to deploy
+- run "heroku open" to open site in browser
+- run "heroku logs" to view the server logs
+- more info here: https://devcenter.heroku.com/articles/getting-started-with-nodejs
+
+/*enable websockets*/
+- run "heroku labs:enable websockets", must be loged into heroku
+- alt. u can the pass the name of the app by adding "-a APPNAME"
+- more info here: https://devcenter.heroku.com/articles/heroku-labs-websockets
+
+//http://docs.phaser.io/Phaser.
+//InputHandler.html#enableDrag
+//( lockCenter, bringToTop, pixelPerfect )
+//lockCenter centers sprite on mouse during
+//drag pixelPerfect checks if the mouse click
+//on an actual pixel instead of bounding
+//box of sprite pieces
+
+--------------------------------------------------
+CODE SNIPPETS:
+--------------------------------------------------
+
+1px solid #883A0E
+
+//a css horizontal divider
+.divider-horizontal {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #222222;
+    height: 1px;
+    width: 100%;
+}
+
+/**
+* The font the text will be rendered in.
+* @name Phaser.Text#font
+* @property {string} font - The font the text will be rendered in.
+*/
+Object.defineProperty(Phaser.Text.prototype, 'font', {
+
+    get: function() {
+        return this._style;
+    },
+
+    set: function(value) {
+
+        //  Let's not update unless needed, this way we can safely update the text in a core loop without constant re-draws
+        if (value !== this._style)
+        {
+            this._style = value;
+            this.setStyle(value);
+        }
+
+    }
+
+});
+
+//destroy entire game via orbital strike,
+//u still need to destroy the canvas
+//to get rid of the rendered images, game.destroy() removes all
+//objects ADDED to the game, so every group, sprite button, etc.
+function gameQuit() {
+    socket.disconnect();
+
+    game.destroy();
+
+    $( "canvas" ).remove();
+}
+
+//prevent window resize blah blah
+<meta name="viewport" content="width=device-width, height=device-height,
+    initial-scale=1.0, user-scalable=no">
+
+//stop right click menu from popping up
+<body oncontextmenu="return false;">
+
+//http://www.html5gamedevs.com/topic/1397-keep-running-on-losing-focus/
+//prevent game auto pause when lose focus
+game.stage.disableVisibilityChange = true;
+
+//checks if item is in array and returns the items index
+//or false, HAVE TO USE === when checking this functions
+//return type cause 0 == false but 0 !== false
+function inArray( array, item ) {
+	if( array.length < 0 ) return false;
+
+	for( var n=0; n < array.length; n++ ) {
+
+		if( item == array[n] ) return n;
+
+	}
+
+	return false;
+}
+
+//removes an item from an array, needs the above inArray
+//to work
+function removeFromArray( array, item ) {
+	if( array.length < 0 ) return false;
+
+	var index = inArray( array, item );
+
+	if( index === false ) return false;
+
+	array.splice( index, 1 );
+}
+
+//compares all items in the array to each other
+//returns true if ALL are equal, false otherwise
+function compareVars( vars ) {
+
+	//reverse for loops, efficient but fing ugly :(
+	for( var n = vars.length - 1; n >= 0; n-- ) {
+
+		for(var m = vars.length - 1; m >= 0; m--) {
+			
+			if( vars[n] !== vars[m] ) return false;
+
+		}
+
+	}
+
+	return true;
+}
+
+//compares all items in the array to each other
+//returns true if ALL are equal, false otherwise
+//if check_equal is true than it checks if all the items
+//are equal if check_equal is false than it checks if all
+//the items are unequal
+/**
+*	@param vars array
+*	@param check_equal boolean - type of comparison to 
+*		make default true
+**/
+function compareVars( vars, check_equal ) {
+	if( check_equal === undefined ) 
+		check_equal = true;
+
+	//reverse for loops, efficient but fing ugly :(
+	for( var n = vars.length - 1; n >= 0; n-- ) {
+
+		for(var m = vars.length - 1; m >= 0; m--) {
+			
+			//don't compare item agianst itself
+			if( n == m ) continue;
+
+			if( check_equal ) {
+			
+				if( vars[n] !== vars[m] ) return false;
+			
+			} else {
+
+				if( vars[n] === vars[m] ) return false;
+
+			}
+		}
+
+	}
+
+	return true;
+}
+
+//(y1-y2)=m(x1-x2)
+//m = (y2-y1) / (x2-x1)
+//returns the slope of the line created by those two points
+//returns undefined if the points line on the same x axis
+function findSlope( point1, point2 ) {
+	var dx = point2.x - point1.x,
+		dy = point2.y - point1.y;
+
+	if( dx == 0 ) return undefined;
+
+	return ( dy / dx );
+}
+
+//SEND MSG TO SPECIFIC CLIENT FAILURES
+//io.clients[ game.player1.id ].send();
+//socket.sockets( id ) failed
+//io.sockets.socket( id ) failed
+// io.clients[ game.player1.client_id ].send( 
+//  "start_game", { start: true } );
+// socket.sockets( game.player2.client_id ).emit( 
+//  "start_game", { start: true } );
+// this.emit( "start_game", 
+//     { start: true, game_id: game.id } );
+// this.broadcast.emit( "start_game", 
+//     { start: true, game_id: game.id } );
+
+// util.log( "socket " + 
+//             socket.sockets.clients( this.id ) );
+// util.log( "this " + 
+//             this.sockets );
+// util.log( "io " + io.socket );
+// socket.clients( this.id ).emit( "start_game", 
+// { start: true, game_id: game.id } );
+// socket.sockets.clients( this.id ).emit( 
+//     "start_game", 
+// { start: true, game_id: game.id } );
+
+/**
+onInputDown sends 2 parameters to your callback: 
+the sprite and the pointer that clicked it.
+ 
+So:
+level_clicked: function (bg, pointer) {
+  pointer.x;
+  pointer.y;
+  // or if you need it in world coordinates:
+  pointer.worldX;
+  pointer.worldY;
+}
+**/
+
+//cause illegal break point error
+// active_tiles.forEach( function( t ) { 
+
+// 	var d = t.position.distance( position );
+
+// 	if( d < 61 ) {
+// 		occupied = true;
+// 		break;
+// 	}
+
+// } ) ;
+
+//var n = +"5"; tursn string into int
+//var arrays = array[1] + array[2]; turns arrays
+//into string displaying "[objec object]..."
+
+//get center of non physic enabled sprite
+function getCenterOfSprite( sprite ) {
+	var half_w = sprite.width * 0.5,
+		half_h;
+
+	if( sprite.width == sprite.height )
+		half_h = half_w;
+	else
+		half_h = sprite.height * 0.5;
+
+	return { x: sprite.x + half_w,
+			 y: sprite.y + half_h };
+}
+
+
+///model for toggle function
+function toggleInput( enable ) {
+
+    if( enable === undefined )
+        enable = !Board.input_enabled;
+
+    if( enable ) {
+
+    } else {
+
+    }
+
+    Board.input_enabled = enable;
+
+}

@@ -1,0 +1,311 @@
+body {
+	background-color: black;
+	margin: 0;
+}
+
+.invis {
+    display: none !important;
+    visibility: hidden;
+}
+
+#world {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto 0 auto;
+    background: black;
+    border: thin solid #aaaaaa;
+    cursor: crosshair;
+}
+
+/*from Cave's style css*/
+.toast {
+    position: fixed;
+    width: 100%;
+    background-color: #000;
+    padding: 10px 0;
+    text-align: center;
+    color: #ddd;
+    font-family: Arial;
+}
+
+.toast .title {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.toast form {
+    display: inline;
+}
+
+.glass {
+    background-color: transparent;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: monospace;
+}
+
+div.shadow:hover {
+    /*
+     * cant use percent values in box-shadow have to use rem instead
+     * box-shadow: 15% 15% 15% 5% yellow;
+     * box-shadow( x, y, blur, magnify )
+     */
+    box-shadow: 5rem -5rem 5rem 1rem yellow;
+}
+
+/*http://www.cssbuttongenerator.com/ */
+div button {
+
+    background-color: #000;
+    text-indent: 0;
+    border: 1px solid #ffff00;
+    display: inline-block;
+    color: #ddd;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    font-style: normal;
+    height: 50px;
+    line-height: 25px;
+    width: 200px;
+    text-align: center;
+    margin-top: 25px;
+
+}
+
+div button:hover {
+
+    background-color: #ffff00;
+    color: #000;
+
+}
+
+div button:active {
+
+    position: relative;
+    top: 1px;
+
+}
+
+.close-btn {
+
+    width: 10em;
+
+}
+
+#gameOverToast, #introToast {
+
+    /*width: 50%;*/
+    /*margin-left: -25%;*/
+
+}
+
+#introToast {
+    background-image: url('/imgs/splash_screen.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    min-width: 500px;
+    min-height: 600px;
+}
+
+#introToast .info {
+
+    padding-left: 15%;
+    text-align: left;
+
+}
+
+#introToast .title {
+
+    font-size: 50px;
+    font-weight: 500;
+
+}
+
+.pull-bottom {
+    margin-top: 28em;
+}
+
+.title .big-title {
+
+    font-size: 50px;
+    font-weight: 500;
+
+}
+
+.top-layer {
+    z-index: 100;
+}
+
+div .wooden {
+
+}
+
+button .wooden {
+
+}
+
+.smiley {
+    width: 125px;
+    height: 125px;
+    background-image: url('/imgs/faces.png');
+    background-repeat: no-repeat;
+    display: block;
+    margin: 0 auto;
+}
+
+/*These are all yellow*/
+.smiley.sleep {
+    background-position: -2000px 0;
+}
+
+.smiley.awesome {
+    background-position: -1250px 0;
+}
+
+.smiley.cry {
+    background-position: -1500px 0;
+}
+
+.smiley.sleep_red {
+    background-position: -2125px 0;
+}
+
+.smiley.awesome_red {
+    background-position: -1375px 0;
+}
+
+.smiley.cry_red {
+    background-position: -1625px 0;
+}
+
+.help-btn {
+    background-image: url('/imgs/wooden_qmark.png');
+    background-repeat: no-repeat;
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 4px;
+    border: none;
+    width: 29px;
+    height: 34px;
+}
+
+.hide-btn {
+    background-image: url('/imgs/hide_arrow.png');
+    background-repeat: no-repeat;
+    width: 29px;
+    height: 34px;
+}
+
+.show-btn {
+    background-image: url('/imgs/show_arrow.png');
+    background-repeat: no-repeat;
+    width: 29px;
+    height: 34px;
+}
+
+.nudge-btn {
+    background-image: url('/imgs/ui_buttons.png');
+    background-repeat: no-repeat;
+    width: 116px;
+    height: 36px;
+}
+
+.options-btn {
+    background-image: url('/imgs/ui_buttons.png');
+    background-repeat: no-repeat;
+    background-position: 0 -40px;
+    width: 116px;
+    height: 36px;
+}
+
+.quit-btn {
+    background-image: url('/imgs/ui_buttons.png');
+    background-repeat: no-repeat;
+    background-position: 0 -80px;
+    width: 116px;
+    height: 36px;
+}
+
+div .game-steps {
+    display: block;
+}
+
+.game-steps div {
+    display: inline;
+}
+
+.game-steps div span {
+    display: inline;
+}
+
+.game-steps div p {
+    display: inline;
+}
+
+div .ui-overview {
+    display: block;
+}
+
+.ui-overview span, .ui-overview div, .ui-overview label {
+    display: inline-block;
+}
+
+.ui-overview span {
+    margin-right: 5px;
+}
+
+.ui-overview div {
+    margin: 3px 15px 3px 0;
+}
+
+div .divider-horizontal {
+    position: relative;
+    margin: 2px 0 2px 0;
+    padding: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #222222;
+    height: 1px;
+    width: 100%;
+    display: block;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+h4 {
+    display: block;
+}
+
+/*TODO: change this to be responsive, 600px for big screens and 100% all other*/
+.help-sections {
+    border-width: 2px;
+    border-style: dashed;
+    border-color: brown;
+    width: 700px;
+    margin: 5px auto 5px auto
+}
+
+.center {
+    top: 24%;
+    margin: 0 auto;
+}
+
+@media ( max-width: 790px ) {
+
+    canvas {
+        margin: 0;
+    }
+
+}
+
+@media ( min-width: 791px ) {
+
+    canvas {
+        margin: 0 25% 0 25%;
+    }
+
+}

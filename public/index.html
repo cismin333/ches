@@ -1,0 +1,261 @@
+<html>
+
+	<head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+        <title>MTA - Heroku</title>
+
+        <meta name="description" content="">
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+        <meta name="viewport" content="width=device-width, height=device-height,
+        initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/style.css">
+
+        <!-- <script src="/socket.io/socket.io.js"></script> -->
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="js/phaser.js"></script>
+        <script src="js/client.js"></script>
+        <script src="js/player.js"></script>
+        <script src="js/tile.js"></script>
+        <script src="js/button.js"></script>
+        <script src="js/board.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/tests.js"></script>
+
+	</head>
+
+    <body oncontextmenu="/*return false;*/">
+
+        <!-- pause dialog box -->
+        <div id="alertToast" class="toast invis">
+            <p id="alertTitle" class="title">Alert</p>
+            <p id="alertMsg">This is an alert...no really?</p>
+        </div>
+
+        <!-- main menu -->
+        <div id="introToast" class="toast">
+            <p class="title">6 Man Chess
+                <button class="help-btn"
+                        onclick="$( '#helpMenu' ).toggleClass( 'invis' );">
+                </button>
+            </p>
+
+            <!--
+            <div>
+                <label for="inPlayerName"><b>Name:</b></label>
+                <input id="inPlayerName" type="text">
+            </div>
+            -->
+
+            <button id="btnPlay" onclick="startGame();"> play </button>
+        </div>
+
+        <!-- game over menu -->
+        <div id="gameOverToast" class="toast invis">
+            <p class="title">Victory</p>
+
+            <p class="body" >
+                Victory!
+            </p>
+
+            <button class="close-btn"
+                    onclick="$( '#gameOverToast' ).toggleClass( 'invis' );
+                    gamePlayAgain();"> play again </button>
+        </div>
+
+        <!-- option menu -->
+        <div id="optionMenu" class="toast invis top-layer">
+            <p class="title"> Options </p>
+
+            <label>Game Mode:</label>
+
+            <form>
+
+                <input id="inDiagonal" type="radio" name="game_mode" value="0"
+                       checked>
+                <label for="inDiagonal">diagonal</label>
+
+                <input id="inStraight" type="radio" name="game_mode" value="1">
+                <label for="inStraight">straight</label>
+
+            </form>
+
+            <br>
+
+            <label>Game Speed:</label>
+
+            <form>
+
+                <input id="inNormal" type="radio" name="game_mode" value="0"
+                       checked>
+                <label for="inNormal">normal</label>
+
+                <input id="inFast" type="radio" name="game_mode" value="1">
+                <label for="inFast">break-neck</label>
+
+            </form>
+
+            <br>
+
+            <button onclick="$( '#optionMenu' ).toggleClass( 'invis' );">
+                close
+            </button>
+
+        </div>
+
+        <!-- help menu -->
+        <div id="helpMenu" class="toast invis top-layer">
+            <p class="title"> Help </p>
+
+            <div class="body">
+
+                <div id="help1" class="help-sections">
+                    <h4>Overview</h4>
+
+                    <p>
+                        This game is like tic tac toe, first player to get their pieces in a
+                        <br>
+                        row wins but there is a catch. You can only place three pieces on the
+                        <br>
+                        board and after they have all been placed on the board you can move
+                        <br>
+                        your pieces diagonally and or in a straight line depending on the
+                        <br>
+                        game mode.
+                    </p>
+                </div>
+
+                <div id="help2" class="game-steps help-sections">
+                    <h4>Game Steps</h4>
+
+                    <div>
+                        <span>1.</span> <p>place your pieces by clicking on board</p>
+                    </div>
+
+                    <div class="divider-horizontal hidden"></div>
+
+                    <div>
+                        <span>2.</span> <p>after placing your pieces drag them to move</p>
+                    </div>
+
+                    <div class="divider-horizontal hidden"></div>
+
+                    <div>
+                        <span>3.</span> <p>first player to get three pieces in a row wins</p>
+                    </div>
+                </div>
+
+                <div id="help3" class="ui-overview help-sections">
+                    <h4>UI</h4>
+
+                    <div>
+                        <span class="help-btn"></span>
+                        <label>press to view help menu</label>
+                    </div>
+
+                    <div>
+                        <span class="hide-btn"></span>
+                        <label>press to hide the UI panel</label>
+                    </div>
+
+                    <div class="divider-horizontal hidden"></div>
+
+                    <div>
+                        <span class="show-btn"></span>
+                        <label>press to display the UI panel</label>
+                    </div>
+
+                    <div>
+                        <span class="nudge-btn"></span>
+                        <label>press to kick player if inactive</label>
+                    </div>
+
+                    <div class="divider-horizontal hidden"></div>
+
+                    <div>
+                        <span class="options-btn"></span>
+                        <label>press to view options</label>
+                    </div>
+
+                    <div>
+                        <span class="quit-btn"></span>
+                        <label>press to quit the current game</label>
+                    </div>
+
+                </div>
+
+                <!--<div class="help-sections">-->
+                    <!---->
+                <!--</div>-->
+
+            </div>
+            <!--<p class="info" >-->
+                <!--You have 3 pieces to place on the board, click on the board-->
+                <!--to place them.-->
+                <!--<br>-->
+                <!--<br>-->
+                <!--Once they are all placed on the board you can move them-->
+                <!--adjacent squares by dragging them.-->
+                <!--<br>-->
+                <!--<br>-->
+                <!--<b>The first player to get three pieces in a row wins!</b>-->
+                <!--<br>-->
+                <!--<br>-->
+            <!--</p>-->
+
+            <button onclick="$( '#helpMenu' ).toggleClass( 'invis' );">
+                close
+            </button>
+
+        </div>
+
+        <!-- nudge menu -->
+        <div id="nudgeMenu" class="toast invis glass">
+            <p class="title"> Wake Up! </p>
+
+            <p>
+                Hey there, sorry to interrupt but your taking too damn long!
+                <br>
+                Make a move or you will be kicked from this game.
+
+                <br>
+                <br>
+
+                - Love The Internet
+
+                <br>
+                <br>
+
+                Warnings left: <b id="nudges"></b>
+            </p>
+
+            <button onclick="$( '#nudgeMenu' ).toggleClass( 'invis' );">
+                close
+            </button>
+
+        </div>
+
+        <!-- nudge menu -->
+        <div id="bottomMenu" class="toast center invis glass">
+            <p class="title big-title"> Title! </p>
+
+            <span class="smiley"></span>
+
+            <p class="body">
+                Body
+            </p>
+
+            <button class="wooden close-btn"
+                    onclick="$( '#bottomMenu' ).toggleClass( 'invis' );">
+                close
+            </button>
+
+        </div>
+
+    </body>
+
+</html>
