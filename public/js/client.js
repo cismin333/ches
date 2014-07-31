@@ -1,6 +1,6 @@
 var socket, 
-	debug = true,
-	url = "http://.herokuapp.com/";
+	debug = false,
+	url = "http://sixmanchess.herokuapp.com/";
 
 function socketInit() {
 	if(debug) {
