@@ -668,6 +668,7 @@ function gamePreload() {
 
 	//backgrounds
     game.load.image( "background_mahogany", "imgs/mahogany_board.png");
+    game.load.image( "background_checker", "imgs/mahogany_board.png");
 
 	//audio
 	game.audio.load();
@@ -785,7 +786,7 @@ function onMouseUp( e ) {
 
 function onDragStart( e ) {
 
-    e.prev_position.setTo( e.x, e.y );
+    e.prev_position.copyFrom( e.position );
     dragHighLight( e.position );
 
 }
@@ -1015,7 +1016,7 @@ function findSlope( point1, point2 ) {
 
 function sendConsoleLog( function_name, msg, send_only_on_debug ) {
 	
-	if( send_only_on_debug && debug == false )
+	if( send_only_on_debug && DEBUG == false )
 		return false;
 	console.log( function_name, msg );
 

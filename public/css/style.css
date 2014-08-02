@@ -54,7 +54,6 @@ div.shadow:hover {
     box-shadow: 5rem -5rem 5rem 1rem yellow;
 }
 
-/*http://www.cssbuttongenerator.com/ */
 div button {
 
     background-color: #000;
@@ -285,7 +284,6 @@ h4 {
     border-width: 2px;
     border-style: dashed;
     border-color: brown;
-    width: 700px;
     margin: 5px auto 5px auto
 }
 
@@ -297,7 +295,11 @@ h4 {
 @media ( max-width: 790px ) {
 
     canvas {
-        margin: 0;
+        margin: 0 auto;
+    }
+
+    .help-sections {
+        width: 100%;
     }
 
 }
@@ -306,6 +308,10 @@ h4 {
 
     canvas {
         margin: 0 25% 0 25%;
+    }
+
+    .help-sections {
+        width: 700px;
     }
 
 }

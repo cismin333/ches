@@ -11,9 +11,24 @@ var http = require('http'),
     empty_games,
     full_games;
 
+/**
+ * Creates a new Player.
+ * @class Player
+ * @param client_id (String)
+ * @param game_id (String)
+ * @param in_game_id (Int)
+ * @param client (Object)
+ * @constructor
+ */
 function Player( client_id, game_id, in_game_id, client ) {
-	this.client_id = client_id;
+
+    /** The socket.io id of this player. */
+    this.client_id = client_id;
+
+    /** The id of the game this player is in. */
 	this.game_id = game_id;
+
+    /** The in game id of the player, either 1 or 2. */
 	this.in_game_id = in_game_id || 1;
     this.client = client;
 	this.tiles = [];
@@ -89,7 +104,7 @@ function onMovePlayer(data) {
 
 	if( !game ) {
 		util.log( "onPlayerMove: " + data.game_id
-            + " not in empty_games" );
+            + " not in full_games" );
 		return false;
 	}
 
@@ -138,7 +153,7 @@ function onNudge( data ) {
 }
 
 function onPlayerJoin(data) {
-    util.log("Player has joined: "+this.id);
+    util.log("Player has joined: ", this.id );
 
     var game_id,
         player_id,
@@ -147,6 +162,7 @@ function onPlayerJoin(data) {
         game,
         game_index;
 
+    //create a game if no games exist
     if( empty_games.length == 0 ) {
         
         game_id = this.id;
@@ -163,22 +179,26 @@ function onPlayerJoin(data) {
 
         empty_games.push( game );
 
+    //join a game
     } else {
 
-        for( var n=0; n < empty_games.length; n++ ) {
-            if( empty_games[n].full ) continue;
-        
-            game = empty_games[n];
-            game_id = empty_games[n].id;
-            game_index = n;
+        //for( var n=0; n < empty_games.length; n++ ) {
+            //if( empty_games[n].full ) continue;
 
-            if( game.player2 == null )
-                player_id = 2;
-            else
-                player_id = 1;
+        //join the first game in empty games list
+        var n = 0;
+        game = empty_games[n];
+        game_id = game.id;
+        game_index = n;
 
-            break;
-        }
+        //TODO: optimize this redundant conditional
+        if( game.player2 == null )
+            player_id = 2;
+        else
+            player_id = 1;
+
+            //break;
+        //}
 
         new_player = new Player( this.id, game_id, 
             player_id, this );
@@ -191,7 +211,7 @@ function onPlayerJoin(data) {
         game.full = ( game.player2 != null && 
             game.player1 != null );
 
-        util.log("Joining game: " + game.id);
+        util.log( "Player ", this.id, "Joining game: " + game.id );
     }
 
     players.push( new_player );
@@ -203,13 +223,13 @@ function onPlayerJoin(data) {
 
         util.log( "Starting game: " + game.id );
 
+        //let the player who has been in the game longer
+        //have the first turn
         game.player1.client.emit( "start_game", 
-            { start: true, 
-              game_id: game.id } );
+            { turn: ( game.player1.in_game_id != player_id ) } );
 
         game.player2.client.emit( "start_game", 
-            { start: true, 
-              game_id: game.id } );
+            { turn: ( game.player2.in_game_id != player_id ) } );
 
         full_games.push( game );
         empty_games.splice( game_index, 1 );

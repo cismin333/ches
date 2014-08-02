@@ -5,16 +5,14 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-        <title>MTA - Heroku</title>
+        <title>6 Man Chess</title>
 
-        <meta name="description" content="">
-        <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+        <meta name="description" content="An HTML5 board game.">
         <meta name="viewport" content="width=device-width, height=device-height,
         initial-scale=1.0, user-scalable=no">
 
         <link rel="stylesheet" href="css/style.css">
 
-        <!-- <script src="/socket.io/socket.io.js"></script> -->
         <script src="/socket.io/socket.io.js"></script>
         <script src="http://code.jquery.com/jquery.min.js"></script>
         <script src="js/phaser.js"></script>
@@ -28,7 +26,7 @@
 
 	</head>
 
-    <body oncontextmenu="return false;">
+    <body oncontextmenu="if( !DEBUG ) return false;">
 
         <!-- pause dialog box -->
         <div id="alertToast" class="toast invis">
@@ -43,13 +41,6 @@
                         onclick="$( '#helpMenu' ).toggleClass( 'invis' );">
                 </button>
             </p>
-
-            <!--
-            <div>
-                <label for="inPlayerName"><b>Name:</b></label>
-                <input id="inPlayerName" type="text">
-            </div>
-            -->
 
             <button id="btnPlay" onclick="startGame();"> play </button>
         </div>
@@ -69,8 +60,9 @@
 
         <!-- option menu -->
         <div id="optionMenu" class="toast invis top-layer">
-            <p class="title"> Options </p>
+            <p class="title"> Options(under construction) </p>
 
+            <!--
             <label>Game Mode:</label>
 
             <form>
@@ -100,6 +92,7 @@
             </form>
 
             <br>
+            -->
 
             <button onclick="$( '#optionMenu' ).toggleClass( 'invis' );">
                 close
@@ -117,13 +110,17 @@
                     <h4>Overview</h4>
 
                     <p>
-                        This game is like tic tac toe, first player to get their pieces in a
+                        This game is like tic tac toe, first player
+                        to get their pieces in a
                         <br>
-                        row wins but there is a catch. You can only place three pieces on the
+                        row wins but there is a catch. You can only
+                        place three pieces on the
                         <br>
-                        board and after they have all been placed on the board you can move
+                        board and after they have all been placed on
+                        the board you can move
                         <br>
-                        your pieces diagonally and or in a straight line depending on the
+                        your pieces diagonally and or in a straight
+                        line depending on the
                         <br>
                         game mode.
                     </p>
@@ -133,19 +130,22 @@
                     <h4>Game Steps</h4>
 
                     <div>
-                        <span>1.</span> <p>place your pieces by clicking on board</p>
+                        <span>1.</span> <p>place your pieces by
+                        clicking on the board</p>
                     </div>
 
                     <div class="divider-horizontal hidden"></div>
 
                     <div>
-                        <span>2.</span> <p>after placing your pieces drag them to move</p>
+                        <span>2.</span> <p>after placing your
+                        pieces drag them to move</p>
                     </div>
 
                     <div class="divider-horizontal hidden"></div>
 
                     <div>
-                        <span>3.</span> <p>first player to get three pieces in a row wins</p>
+                        <span>3.</span> <p>first player to get
+                        three pieces in a row wins</p>
                     </div>
                 </div>
 
@@ -154,36 +154,36 @@
 
                     <div>
                         <span class="help-btn"></span>
-                        <label>press to view help menu</label>
+                        <label>view help menu</label>
                     </div>
 
                     <div>
                         <span class="hide-btn"></span>
-                        <label>press to hide the UI panel</label>
+                        <label>hide the UI panel</label>
                     </div>
 
                     <div class="divider-horizontal hidden"></div>
 
                     <div>
                         <span class="show-btn"></span>
-                        <label>press to display the UI panel</label>
+                        <label>display the UI panel</label>
                     </div>
 
                     <div>
                         <span class="nudge-btn"></span>
-                        <label>press to kick player if inactive</label>
+                        <label>kick player if inactive</label>
                     </div>
 
                     <div class="divider-horizontal hidden"></div>
 
                     <div>
                         <span class="options-btn"></span>
-                        <label>press to view options</label>
+                        <label>view options</label>
                     </div>
 
                     <div>
                         <span class="quit-btn"></span>
-                        <label>press to quit the current game</label>
+                        <label>quit the current game</label>
                     </div>
 
                 </div>
@@ -193,19 +193,6 @@
                 <!--</div>-->
 
             </div>
-            <!--<p class="info" >-->
-                <!--You have 3 pieces to place on the board, click on the board-->
-                <!--to place them.-->
-                <!--<br>-->
-                <!--<br>-->
-                <!--Once they are all placed on the board you can move them-->
-                <!--adjacent squares by dragging them.-->
-                <!--<br>-->
-                <!--<br>-->
-                <!--<b>The first player to get three pieces in a row wins!</b>-->
-                <!--<br>-->
-                <!--<br>-->
-            <!--</p>-->
 
             <button onclick="$( '#helpMenu' ).toggleClass( 'invis' );">
                 close

@@ -1,9 +1,9 @@
-var socket, 
-	debug = false,
+var DEBUG = false,
+    socket,
 	url = "http://sixmanchess.herokuapp.com/";
 
 function socketInit() {
-	if(debug) {
+	if( DEBUG ) {
 		socket = io.connect("http://localhost", 
 			{port: 8080, transports: ["websocket"]});
 	} else {
@@ -74,23 +74,26 @@ function onPlayerMove(data) {
 
 }
 
-function onStartGame() {
+function onStartGame( data ) {
 	console.log( "starting game" );
 
-    setTimeout(
-        function() {
-            Menu.toggleMenu( Menu.alert, false );
-        } ,
-        3000 );
+//    setTimeout(
+//        function() {
+//            Menu.toggleMenu( Menu.alert, false );
+//        } ,
+//        3000 );
 
-    HTML_MENU.toggleMenu( HTML_MENU.bottom_menu );
+    HTML_MENU.toggleMenu( HTML_MENU.bottom_menu, true );
 
 	Board.play = true;
     UI.btn_quit.input.enabled = true;
     UI.player_label.visible = true;
     UI.tile_highlights[0].visible = true;
 
-	Board.changePlayer();
+    if( data.turn )
+	    Board.changePlayer( Board.remote_player );
+    else
+        Board.changePlayer( Board.local_player );
 
     UI.tweenGameLabel( "Start!", true );
 

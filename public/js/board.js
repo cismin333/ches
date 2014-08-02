@@ -275,14 +275,14 @@ var Board = {
         if( winner == Board.local_player ) {
 
             game.audio.cheer.play( "cheer" );
-            HTML_MENU.displayMenu( HTML_MENU.bottom_menu, "Victory!",
-                "click close to play again" );
+//            HTML_MENU.displayMenu( HTML_MENU.bottom_menu, "Victory!",
+//                "click close to play again" );
 
         } else {
 
         	game.audio.jeer.play( "jeer" );
-            HTML_MENU.displayMenu( HTML_MENU.bottom_menu, "Defeat!",
-                "click close to play again" );
+//            HTML_MENU.displayMenu( HTML_MENU.bottom_menu, "Defeat!",
+//                "click close to play again" );
 
         }
 
