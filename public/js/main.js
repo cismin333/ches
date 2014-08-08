@@ -1,7 +1,7 @@
 var WIDTH = 660, //$(window).width(),
     HEIGHT = 600; //$(window).height();
 
-var game, Menu, Scoreboard, UI, HTML_MENU;
+var game, Menu, Scoreboard, UI, HTML_MENU, Audio;
 
 function startGame() {
     $( "#btnPlay").text( "loading" );
@@ -112,19 +112,25 @@ function startGame() {
 
     };
 
-    game.audio = {
+    Audio = {
         cheer: null,
         jeer: null,
         move: null,
+        background: null,
         select: null,
+        audio_array: null,
+        master_volume: 1,
 
         load: function() {
 
+            game.load.audio( "audio_background",
+                "audio/Ambient_Effect.mp3" );
             game.load.audio( "audio_yay",
-                "audio/Cheer_GradeSchoolYay.mp3" );
+                "audio/Kids_Yay.mp3" );
+            game.load.audio( "audio_cheering",
+                "audio/Crowd_Cheering.mp3" );
             game.load.audio( "audio_jeer",
-                    "audio/Yelling from arena " +
-                    "crowd_AOS02556.mp3" );
+                "audio/Boo.mp3" );
             // game.load.audio( "move",
             // 	"" );
             // game.load.audio( "select",
@@ -132,30 +138,57 @@ function startGame() {
 
         },
 
-        create: function( g ) {
+        changeVolume: function( volume ) {
+            Audio.master_volume = +volume;
 
-            game.audio.cheer = g.add.audio(
-                "audio_yay" );
-            game.audio.jeer = g.add.audio(
-                "audio_jeer" );
+            Audio.audio_array.forEach( function( child ) {
 
-            //add markers to play certain parts of audio
-            game.audio.cheer.addMarker( "cheer", 0, 5 );
-            game.audio.jeer.addMarker( "jeer", 0, 5 );
+                child.volume = Audio.master_volume;
+
+            } );
 
         },
 
-        play: function( sound ) {
+        create: function( g ) {
+
+            Audio.audio_array = [];
+
+            Audio.background = g.add.audio(
+                "audio_background" );
+            Audio.cheer = g.add.audio(
+                "audio_yay" );
+            Audio.jeer = g.add.audio(
+                "audio_jeer" );
+
+            //add markers to play certain parts of audio
+//            Audio.cheer.addMarker( "cheer", 0, 5 );
+//            Audio.jeer.addMarker( "jeer", 0, 5 );
+
+            Audio.audio_array.push( Audio.background );
+            Audio.audio_array.push( Audio.cheer );
+            Audio.audio_array.push( Audio.jeer );
+
+            Audio.background.play( '', 0, 1, true );
+
+        },
+
+        play: function( sound, marker ) {
+            marker = marker || "";
 
             if( sound == "cheer" ) {
 
+                Audio.cheer.play( marker );
+
             } else if( sound == "jeer" ) {
 
-            } else if( sound == "move" ) {
-
-            } else if( sound == "select" ) {
+                Audio.jeer.play( marker );
 
             }
+//           else if( sound == "move" ) {
+//
+//            } else if( sound == "select" ) {
+//
+//            }
 
         }
     };
@@ -347,6 +380,7 @@ function startGame() {
     };
 
     UI = {
+        show_hints: true,
         btn_nudge: null,
         btn_option: null,
         btn_quit: null,
@@ -506,9 +540,6 @@ function startGame() {
                 }
 
             );
-//            UI.tile_highlights[0].visible = false;
-//            UI.tile_highlights[1].visible = false;
-//            UI.tile_highlights[2].visible = false;
 
         },
 
@@ -528,20 +559,6 @@ function startGame() {
                     }
 
             );
-
-//            if( Board.state == MOVE_STATE ) {
-//
-//                UI.tile_highlights[0].visible = true;
-//                UI.tile_highlights[1].visible = true;
-//                UI.tile_highlights[2].visible = true;
-//
-//            } else {
-//
-//                UI.tile_highlights[0].visible = false;
-//                UI.tile_highlights[1].visible = false;
-//                UI.tile_highlights[2].visible = false;
-//
-//            }
 
         },
 
@@ -633,6 +650,13 @@ function startGame() {
             else
                 $( menu ).toggleClass( "invis" );
 
+        },
+
+        toggleHints: function( turn_hints_on ) {
+            if( turn_hints_on === undefined ) turn_hints_on = true;
+
+            UI.show_hints = turn_hints_on;
+
         }
 
     };
@@ -671,7 +695,7 @@ function gamePreload() {
     game.load.image( "background_checker", "imgs/mahogany_board.png");
 
 	//audio
-	game.audio.load();
+	Audio.load();
 
 }
 
@@ -692,7 +716,7 @@ function gameCreate() {
 
     Scoreboard.create( game );
 
-	game.audio.create( game );
+	Audio.create( game );
 
     //resize the game when window resizes
     //$(window).resize(function() { resizeGame(); } );
@@ -787,7 +811,8 @@ function onMouseUp( e ) {
 function onDragStart( e ) {
 
     e.prev_position.copyFrom( e.position );
-    dragHighLight( e.position );
+
+    if( UI.show_hints ) dragHighLight( e.position );
 
 }
 
@@ -897,6 +922,7 @@ function onBoardClick( sprite, pointer ) {
 }
 
 function onBoardOver( sprite, pointer ) {
+    if( !UI.show_hints ) return false;
     if( !UI.tile_highlights[0].visible ) return false;
 
     UI.tile_highlights[0].x = sprite.x;

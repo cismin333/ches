@@ -1,4 +1,4 @@
-var DEBUG = false;
+var DEBUG = true;
 
 var http = require('http'),
 	express = require('express'),

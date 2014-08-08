@@ -60,39 +60,52 @@
 
         <!-- option menu -->
         <div id="optionMenu" class="toast invis top-layer">
-            <p class="title"> Options(under construction) </p>
-
-            <!--
-            <label>Game Mode:</label>
+            <p class="title"> Options </p>
 
             <form>
 
-                <input id="inDiagonal" type="radio" name="game_mode" value="0"
-                       checked>
-                <label for="inDiagonal">diagonal</label>
+                <!--<label>Game Mode:</label>-->
 
-                <input id="inStraight" type="radio" name="game_mode" value="1">
-                <label for="inStraight">straight</label>
+                <!--<input id="inDiagonal" type="radio" name="game_mode" value="0"-->
+                       <!--checked>-->
+                <!--<label for="inDiagonal">diagonal</label>-->
+
+                <!--<input id="inStraight" type="radio" name="game_mode" value="1">-->
+                <!--<label for="inStraight">straight</label>-->
+
+                <!--<br>-->
+    <!---->
+                <!--<label>Game Speed:</label>-->
+
+                <!--<input id="inNormal" type="radio" name="game_speed" value="0"-->
+                       <!--checked>-->
+                <!--<label for="inNormal">normal</label>-->
+
+                <!--<input id="inFast" type="radio" name="game_speed" value="1">-->
+                <!--<label for="inFast">break-neck</label>-->
+
+                <label>hints:</label>
+
+                <input id="inHintsOn" type="radio" name="game_mode" value="1"
+                       checked onclick="UI.toggleHints( $( '#inHintsOn' ).val() )">
+                <label for="inHintsOn">on</label>
+
+                <input id="inHintsOff" type="radio" name="game_mode" value="0"
+                       onclick="UI.toggleHints( $( '#inHintsOff' ).val() )">
+                <label for="inHintsOff">off</label>
+
+                <br>
+
+                <label>audio:</label>
+
+                <input id="inAudio" type="range" name="audio" value="1"
+                       min="0" max="1" step="0.1"
+                       oninput="Audio.changeVolume( $( '#inAudio' ).val() )">
+                <label for="inAudio"></label>
 
             </form>
 
             <br>
-
-            <label>Game Speed:</label>
-
-            <form>
-
-                <input id="inNormal" type="radio" name="game_mode" value="0"
-                       checked>
-                <label for="inNormal">normal</label>
-
-                <input id="inFast" type="radio" name="game_mode" value="1">
-                <label for="inFast">break-neck</label>
-
-            </form>
-
-            <br>
-            -->
 
             <button onclick="$( '#optionMenu' ).toggleClass( 'invis' );">
                 close

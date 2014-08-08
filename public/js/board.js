@@ -274,13 +274,13 @@ var Board = {
         //TODO: set up audio
         if( winner == Board.local_player ) {
 
-            game.audio.cheer.play( "cheer" );
+            Audio.play( "cheer" );
 //            HTML_MENU.displayMenu( HTML_MENU.bottom_menu, "Victory!",
 //                "click close to play again" );
 
         } else {
 
-        	game.audio.jeer.play( "jeer" );
+            Audio.play( "jeer" );
 //            HTML_MENU.displayMenu( HTML_MENU.bottom_menu, "Defeat!",
 //                "click close to play again" );
 
